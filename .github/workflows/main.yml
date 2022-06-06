@@ -40,9 +40,12 @@ jobs:
       - name: Build
         run: |
           npm run build -- --prod
-      - name: Archive build
-        if: success()
-        uses: actions/upload-artifact@v3.1.0
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
         with:
-          name: deploy_dist
-          path: dist
+          github-token: $
+          output-file: 'false'
+      - name: Deploy
+        run: |
+          npm run deploy
